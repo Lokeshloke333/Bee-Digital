@@ -1,0 +1,651 @@
+/* ==========================================================================
+   1. Variables & Custom Properties
+   ========================================================================== */
+:root {
+    /* Brand Colors */
+    --bee-yellow: #FED303;
+    --bee-black: #050505;
+    --bee-white: #FFFFFF;
+    
+    /* Supporting Colors */
+    --color-gray-50: #f9fafb;
+    --color-gray-100: #f3f4f6;
+    --color-gray-200: #e5e7eb;
+    --color-gray-400: #9ca3af;
+    --color-gray-600: #4b5563;
+    --color-gray-800: #1f2937;
+    --color-dark-charcoal: #121212;
+    --color-soft-yellow: #fffdf2;
+    
+    /* Typography */
+    --font-primary: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    
+    /* Responsive Font Sizes using clamp() */
+    --fs-h1: clamp(36px, 5vw, 70px);
+    --fs-h2: clamp(32px, 4vw, 56px);
+    --fs-h3: clamp(24px, 3vw, 36px);
+    --fs-h4: clamp(20px, 2.5vw, 28px);
+    --fs-body-lg: clamp(18px, 2vw, 22px);
+    --fs-body: 16px;
+    --fs-small: 14px;
+    --fs-tiny: 12px;
+
+    /* Spacing */
+    --section-padding-y: clamp(60px, 10vw, 120px);
+    
+    /* UI Elements */
+    --border-radius-sm: 8px;
+    --border-radius-md: 16px;
+    --border-radius-lg: 24px;
+    --border-radius-pill: 100px;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 10px 30px rgba(0,0,0,0.08);
+    --shadow-lg: 0 20px 40px rgba(0,0,0,0.12);
+    
+    /* Transitions */
+    --transition-fast: 200ms ease;
+    --transition-normal: 300ms ease;
+    --transition-slow: 500ms ease;
+}
+
+/* ==========================================================================
+   2. Reset & Base Styles
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-primary);
+    font-size: var(--fs-body);
+    color: var(--bee-black);
+    background-color: var(--bee-white);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   3. Typography
+   ========================================================================== */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-primary);
+    color: var(--bee-black);
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+}
+
+h1 { font-size: var(--fs-h1); font-weight: 800; }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+h4 { font-size: var(--fs-h4); }
+
+p {
+    margin-bottom: 1.5rem;
+    color: var(--color-gray-600);
+}
+
+.text-lead {
+    font-size: var(--fs-body-lg);
+    font-weight: 500;
+}
+
+.label-small {
+    font-size: var(--fs-tiny);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+}
+
+a {
+    color: var(--bee-black);
+    text-decoration: none;
+    transition: var(--transition-normal);
+}
+
+a:hover {
+    color: var(--bee-yellow);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ==========================================================================
+   4. Buttons
+   ========================================================================== */
+.btn-bee {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 32px;
+    font-family: var(--font-primary);
+    font-weight: 600;
+    font-size: var(--fs-body);
+    border-radius: var(--border-radius-pill);
+    text-decoration: none;
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.btn-primary {
+    background-color: var(--bee-black);
+    color: var(--bee-white);
+    border-color: var(--bee-black);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--bee-yellow);
+    color: var(--bee-black);
+    border-color: var(--bee-yellow);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: var(--bee-white);
+    color: var(--bee-black);
+    border-color: var(--color-gray-200);
+}
+
+.btn-secondary:hover, .btn-secondary:focus {
+    background-color: var(--bee-black);
+    color: var(--bee-white);
+    border-color: var(--bee-black);
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   5. Utility Classes
+   ========================================================================== */
+.section-padding {
+    padding-top: var(--section-padding-y);
+    padding-bottom: var(--section-padding-y);
+}
+
+.bg-dark-section {
+    background-color: var(--bee-black);
+    color: var(--bee-white);
+}
+
+.bg-dark-section h1, .bg-dark-section h2, .bg-dark-section h3, .bg-dark-section h4 {
+    color: var(--bee-white);
+}
+
+.bg-dark-section p {
+    color: var(--color-gray-400);
+}
+
+.text-yellow {
+    color: var(--bee-yellow);
+}
+
+.highlight-pill {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--bee-yellow);
+    color: var(--bee-black);
+    padding: 8px 24px;
+    border-radius: var(--border-radius-pill);
+    font-weight: 700;
+    font-size: var(--fs-body-lg);
+    box-shadow: 0 4px 15px rgba(254, 211, 3, 0.3);
+}
+
+/* ==========================================================================
+   6. Decorative Elements
+   ========================================================================== */
+.pattern-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 40px 40px;
+    background-image: 
+        linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.glow-yellow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(254, 211, 3, 0.15) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* ==========================================================================
+   7. Navigation
+   ========================================================================== */
+.navbar {
+    background-color: transparent;
+    transition: all 0.4s ease;
+}
+
+.navbar-scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+}
+
+.navbar-brand {
+    color: var(--bee-black);
+}
+
+.nav-link {
+    color: var(--bee-black);
+    font-weight: 500;
+    transition: color var(--transition-fast);
+}
+
+.nav-link:hover, .nav-link:focus, .nav-link.active {
+    color: var(--bee-yellow);
+}
+
+/* ==========================================================================
+   8. Hero Section
+   ========================================================================== */
+.hero {
+    min-height: 100vh;
+    padding-top: 120px;
+    padding-bottom: 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.services-hero {
+    position: relative;
+    overflow: hidden;
+    padding-top: clamp(70px, 8vw, 110px);
+    padding-bottom: clamp(70px, 8vw, 120px);
+    background-image: var(--bg-grid-pattern);
+    background-size: 100px 100px;
+    background-position: center top;
+}
+
+.eyebrow-pill {
+    display: inline-block;
+    padding: 6px 20px;
+    border: 1px solid var(--bee-black);
+    border-radius: var(--border-radius-pill);
+    font-size: var(--fs-small);
+    font-weight: 600;
+    color: var(--bee-black);
+    background-color: var(--bee-white);
+}
+
+.hero-heading {
+    font-size: var(--fs-h1);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--bee-black);
+}
+
+.bee-highlight {
+    background-color: var(--bee-yellow);
+    color: var(--bee-black);
+    padding: 0 16px;
+    border-radius: 12px;
+    display: inline-block;
+    transform: translateY(-4px); /* Slight visual adjustment */
+}
+
+.hero-text {
+    font-size: var(--fs-body-lg);
+    color: var(--color-gray-800);
+    line-height: 1.6;
+}
+
+.concept-flow {
+    display: inline-block;
+    background-color: var(--bee-yellow);
+    color: var(--bee-black);
+    padding: 14px 40px;
+    border-radius: var(--border-radius-pill);
+    font-size: clamp(16px, 2vw, 20px);
+    box-shadow: 0 10px 30px rgba(254, 211, 3, 0.3);
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Decorative Hexagons */
+.hex-decor {
+    position: absolute;
+    background-color: var(--bee-yellow);
+    opacity: 0.2;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.hex-1 {
+    width: 60px;
+    height: 60px;
+    top: 20%;
+    left: 10%;
+    transform: rotate(15deg);
+}
+
+.hex-2 {
+    width: 100px;
+    height: 100px;
+    bottom: 20%;
+    right: 15%;
+    opacity: 0.15;
+    transform: rotate(-20deg);
+}
+
+.hex-3 {
+    width: 40px;
+    height: 40px;
+    top: 30%;
+    right: 25%;
+    background-color: var(--bee-black);
+    opacity: 0.05;
+}
+
+/* Scroll Reveal Base */
+.reveal {
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Only hide elements initially if JS is enabled */
+body.js-enabled .reveal:not(.active) {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* ==========================================================================
+   9. Trust Bar
+   ========================================================================== */
+.trust-bar {
+    background-color: var(--color-gray-50) !important;
+}
+
+/* ==========================================================================
+   10. Services
+   ========================================================================== */
+.service-card {
+    background-color: var(--bee-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+    z-index: 1;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--bee-yellow);
+}
+
+.service-number {
+    font-size: var(--fs-h2);
+    font-weight: 800;
+    color: var(--color-gray-200);
+    line-height: 1;
+    margin-bottom: 1rem;
+    transition: color var(--transition-normal);
+}
+
+.service-card:hover .service-number {
+    color: var(--bee-yellow);
+}
+
+.service-card .badge {
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: var(--fs-tiny);
+}
+/* Detailed Services Typography Refinements */
+.service-detail-eyebrow {
+    font-size: clamp(12px, 1.5vw, 14px) !important;
+    letter-spacing: 1px;
+}
+.service-detail-heading {
+    font-size: clamp(34px, 3.5vw, 52px) !important;
+    line-height: 1.08 !important;
+    letter-spacing: -0.02em !important;
+}
+@media (max-width: 767.98px) {
+    .service-detail-heading {
+        font-size: clamp(30px, 8vw, 38px) !important;
+    }
+}
+
+/* ==========================================================================
+   11. Case Studies & Mockups
+   ========================================================================== */
+.mockup-container {
+    border: 1px solid var(--color-gray-200);
+}
+
+.mockup-placeholder {
+    border: 1px dashed var(--color-gray-400);
+}
+
+.mockup-container:hover .mockup-placeholder {
+    border-color: var(--bee-yellow);
+    background-color: var(--color-soft-yellow) !important;
+    transition: all var(--transition-normal);
+}
+
+/* ==========================================================================
+   12. Client Logos
+   ========================================================================== */
+.client-logo-box {
+    padding: 24px 16px;
+    background-color: var(--color-gray-50);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--border-radius-sm);
+    color: var(--color-gray-400);
+    font-weight: 700;
+    transition: all var(--transition-normal);
+}
+
+.client-logo-box:hover {
+    background-color: var(--bee-white);
+    border-color: var(--bee-yellow);
+    color: var(--bee-black);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ==========================================================================
+   13. Results Section
+   ========================================================================== */
+.result-card {
+    background-color: var(--color-dark-charcoal);
+    transition: all var(--transition-normal);
+}
+
+.result-card:hover {
+    border-color: var(--bee-yellow) !important;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(254, 211, 3, 0.1);
+}
+
+/* ==========================================================================
+   14. CTA Section
+   ========================================================================== */
+.cta-glow {
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(circle, rgba(254, 211, 3, 0.2) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.cta-container {
+    border: 1px solid var(--color-gray-200);
+}
+
+/* ==========================================================================
+   15. Footer
+   ========================================================================== */
+.footer-links a {
+    color: var(--color-gray-200);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.footer-links a:hover {
+    color: var(--bee-yellow);
+    padding-left: 4px;
+}
+
+.text-hover-yellow {
+    transition: color var(--transition-fast);
+}
+
+.text-hover-yellow:hover {
+    color: var(--bee-yellow) !important;
+}
+
+/* ==========================================================================
+   15a. Header & Navigation Components
+   ========================================================================== */
+.site-header {
+    transition: all 0.3s ease;
+    background-color: transparent;
+}
+
+.site-header.scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+.site-header .nav-link {
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    padding: 8px 16px !important;
+    white-space: nowrap;
+}
+
+.site-header .nav-link:hover {
+    color: var(--bee-yellow) !important;
+}
+
+.site-header .nav-active {
+    background-color: rgba(254, 211, 3, 0.15);
+    color: var(--bee-black) !important;
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   15b. Footer Components
+   ========================================================================== */
+.social-icon {
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: translateY(-4px);
+    background-color: var(--bee-yellow) !important;
+    color: var(--bee-black) !important;
+}
+
+.btn-enquire {
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.btn-enquire:hover {
+    background-color: var(--bee-yellow);
+    color: var(--bee-black);
+    transform: translateY(-2px);
+    border-color: var(--bee-yellow);
+}
+
+/* ==========================================================================
+   16. Services Page Specifics
+   ========================================================================== */
+.marquee-wrapper {
+    white-space: nowrap;
+}
+.marquee-content {
+    animation: marquee 20s linear infinite;
+    display: inline-block;
+    will-change: transform;
+}
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.deliverable-card {
+    font-size: 0.95rem;
+    cursor: default;
+}
+.hover-yellow-bg:hover {
+    background-color: var(--bee-yellow) !important;
+    color: var(--bee-black) !important;
+    border-color: var(--bee-yellow) !important;
+}
+.hover-yellow-bg:hover .badge {
+    background-color: var(--bee-black) !important;
+    color: var(--bee-yellow) !important;
+}
+
+.flow-node {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+/* ==========================================================================
+   17. Responsive Adjustments
+   ========================================================================== */
+@media (max-width: 991.98px) {
+    .hero {
+        padding-top: 100px;
+    }
+    
+    .hex-1 { top: 10%; left: 5%; width: 40px; height: 40px; }
+    .hex-2 { bottom: 10%; right: 5%; width: 60px; height: 60px; }
+}
+
+@media (max-width: 767.98px) {
+    .section-padding {
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+    
+    .hero-text {
+        font-size: var(--fs-body);
+    }
+    
+    .concept-flow {
+        padding: 10px 24px;
+    }
+    
+    .service-card {
+        padding: 24px !important;
+    }
+}
