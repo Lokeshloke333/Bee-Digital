@@ -100,7 +100,80 @@ document.addEventListener('DOMContentLoaded', () => {
             counters.forEach(counter => runCounter(counter));
         }
     }
+
+    // Initialize Premium Results Counters
+    if (typeof initResultsCounters === 'function') {
+        initResultsCounters();
+    }
 });
+
+/* ==========================================================================
+   Premium Results Section Counters
+   ========================================================================== */
+function initResultsCounters() {
+    const counters = document.querySelectorAll('.results-counter');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (counters.length === 0) return;
+
+    // Easing function: easeOutQuart
+    const easeOutQuart = x => 1 - Math.pow(1 - x, 4);
+
+    const animateCounter = (el) => {
+        const start = parseFloat(el.getAttribute('data-start')) || 0;
+        const target = parseFloat(el.getAttribute('data-target')) || 0;
+        const prefix = el.getAttribute('data-prefix') || '';
+        const suffix = el.getAttribute('data-suffix') || '';
+        const decimals = parseInt(el.getAttribute('data-decimals')) || 0;
+        const duration = 2000; // 2 seconds
+
+        if (prefersReducedMotion) {
+            el.innerHTML = `${prefix}${target.toFixed(decimals)}${suffix}`;
+            return;
+        }
+
+        let startTime = null;
+
+        const step = (timestamp) => {
+            if (!startTime) startTime = timestamp;
+            const progress = timestamp - startTime;
+            const percent = Math.min(progress / duration, 1);
+            
+            // Apply easing
+            const easedProgress = easeOutQuart(percent);
+            
+            const current = (start + (target - start) * easedProgress).toFixed(decimals);
+            
+            el.innerHTML = `${prefix}${current}${suffix}`;
+
+            if (progress < duration) {
+                requestAnimationFrame(step);
+            } else {
+                el.innerHTML = `${prefix}${target.toFixed(decimals)}${suffix}`;
+                // Trigger shine effect
+                el.classList.add('number-shine');
+            }
+        };
+
+        requestAnimationFrame(step);
+    };
+
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 }); // Trigger when 50% visible
+
+        counters.forEach(counter => observer.observe(counter));
+    } else {
+        counters.forEach(counter => animateCounter(counter));
+    }
+}
+
 
 /* ==========================================================================
    Contact Modal Logic

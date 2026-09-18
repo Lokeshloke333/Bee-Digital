@@ -115,29 +115,50 @@ function initScrollBehavior() {
 }
 
 /**
- * Initializes mobile menu behavior, specifically closing the menu when a link is clicked.
+ * Initializes mobile menu behavior, with full custom JS control for a premium feel.
  */
 function initMobileMenu() {
-    const navbarToggler = document.querySelector('.navbar-toggler');
-    const navbarCollapse = document.querySelector('.navbar-collapse');
+    const navbarToggler = document.getElementById('mobile-menu-toggle');
+    const navbarCollapse = document.getElementById('navbarNav');
     
     if (!navbarToggler || !navbarCollapse) return;
 
-    // Optional: Close menu on nav link click
-    const navLinks = document.querySelectorAll('.navbar-nav .nav-link, .btn-bee');
+    // Toggle menu state
+    const toggleMenu = () => {
+        const isCurrentlyOpen = navbarCollapse.classList.contains('is-open');
+        
+        if (isCurrentlyOpen) {
+            // Close it
+            navbarCollapse.classList.remove('is-open');
+            navbarToggler.setAttribute('aria-expanded', 'false');
+            document.body.classList.remove('menu-open');
+        } else {
+            // Open it
+            navbarCollapse.classList.add('is-open');
+            navbarToggler.setAttribute('aria-expanded', 'true');
+            document.body.classList.add('menu-open');
+        }
+    };
+
+    navbarToggler.addEventListener('click', toggleMenu);
+
+    // Close menu on nav link click
+    const navLinks = document.querySelectorAll('.navbar-nav .nav-link, .navbar-nav .btn-bee');
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            if (navbarCollapse.classList.contains('show')) {
-                // If bootstrap is loaded, try to use its collapse instance
-                if (typeof bootstrap !== 'undefined') {
-                    const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
-                    if (bsCollapse) bsCollapse.hide();
-                } else {
-                    // Fallback to manual closing if bootstrap JS fails/isn't there yet
-                    navbarCollapse.classList.remove('show');
-                    navbarToggler.setAttribute('aria-expanded', 'false');
-                }
+            if (navbarCollapse.classList.contains('is-open')) {
+                toggleMenu();
             }
         });
     });
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navbarCollapse.classList.contains('is-open')) {
+            toggleMenu();
+        }
+    });
+
+    // Prevent closing when clicking inside the menu, but close if clicking outside (like the body)
+    // Not strictly needed since it covers the full screen or screen width, but good practice.
 }
