@@ -49,4 +49,211 @@ document.addEventListener('DOMContentLoaded', () => {
         // Fallback for older browsers
         revealElements.forEach(el => el.classList.add('active'));
     }
+
+    // Trust Bar Counter Animation
+    const counters = document.querySelectorAll('.counter');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (counters.length > 0) {
+        const runCounter = (counter) => {
+            if (prefersReducedMotion) {
+                counter.innerText = counter.getAttribute('data-target');
+                return;
+            }
+            
+            const target = +counter.getAttribute('data-target');
+            const duration = 1200; // 1.2s
+            let start = null;
+            
+            const animate = (time) => {
+                if (!start) start = time;
+                const elapsed = time - start;
+                const progress = Math.min(elapsed / duration, 1);
+                // easeOutQuart for smooth deceleration
+                const easeOut = 1 - Math.pow(1 - progress, 4);
+                
+                counter.innerText = Math.floor(target * easeOut);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            requestAnimationFrame(animate);
+        };
+
+        if ('IntersectionObserver' in window) {
+            const counterObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        runCounter(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+            
+            counters.forEach(counter => {
+                counterObserver.observe(counter);
+            });
+        } else {
+            counters.forEach(counter => runCounter(counter));
+        }
+    }
 });
+
+/* ==========================================================================
+   Contact Modal Logic
+   ========================================================================== */
+window.openContactModal = function(service = 'General Enquiry') {
+    const overlay = document.getElementById('contactModalOverlay');
+    const select = document.getElementById('contactService');
+    const form = document.getElementById('beeContactForm');
+    const formState = document.getElementById('contactFormState');
+    const successState = document.getElementById('contactSuccessState');
+
+    if (!overlay) return;
+
+    // Reset states
+    if (form) {
+        form.reset();
+        form.classList.remove('was-validated');
+        const invalidFeedbacks = form.querySelectorAll('.bee-invalid-feedback');
+        invalidFeedbacks.forEach(el => el.style.display = 'none');
+        form.querySelectorAll('.bee-form-control').forEach(el => el.classList.remove('is-invalid'));
+    }
+    
+    if (formState && successState) {
+        formState.style.display = 'block';
+        successState.style.display = 'none';
+        
+        // Reset checkmark animation
+        const checkmark = successState.querySelector('.checkmark');
+        if (checkmark) checkmark.style.animation = 'none';
+    }
+
+    // Set service if passed
+    if (select) {
+        const optionExists = Array.from(select.options).some(opt => opt.value === service);
+        if (optionExists) {
+            select.value = service;
+        } else {
+            select.value = 'General Enquiry';
+        }
+    }
+
+    // Open modal
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+};
+
+window.closeContactModal = function() {
+    const overlay = document.getElementById('contactModalOverlay');
+    if (overlay) {
+        overlay.classList.remove('show');
+        setTimeout(() => {
+            document.body.style.overflow = '';
+        }, 350); // Wait for CSS transition
+    }
+};
+
+window.initContactModal = function() {
+    const overlay = document.getElementById('contactModalOverlay');
+    const closeBtn = document.getElementById('contactModalClose');
+    const closeSuccessBtn = document.getElementById('contactModalCloseSuccess');
+    const form = document.getElementById('beeContactForm');
+
+    if (!overlay) return;
+
+    // Close listeners
+    if (closeBtn) closeBtn.addEventListener('click', closeContactModal);
+    if (closeSuccessBtn) closeSuccessBtn.addEventListener('click', closeContactModal);
+    
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeContactModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('show')) {
+            closeContactModal();
+        }
+    });
+
+    // Global listener for dynamic trigger elements
+    document.addEventListener('click', (e) => {
+        const trigger = e.target.closest('.contact-trigger');
+        if (trigger) {
+            e.preventDefault();
+            const service = trigger.getAttribute('data-service') || 'General Enquiry';
+            openContactModal(service);
+        }
+    });
+
+    // Form Validation and Submit
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            let isValid = true;
+            const name = document.getElementById('contactName');
+            const email = document.getElementById('contactEmail');
+            
+            // Basic reset
+            form.querySelectorAll('.bee-invalid-feedback').forEach(el => el.style.display = 'none');
+            form.querySelectorAll('.bee-form-control').forEach(el => el.classList.remove('is-invalid'));
+
+            if (!name.value.trim()) {
+                isValid = false;
+                name.classList.add('is-invalid');
+                name.nextElementSibling.style.display = 'block';
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email.value.trim() || !emailRegex.test(email.value.trim())) {
+                isValid = false;
+                email.classList.add('is-invalid');
+                email.nextElementSibling.style.display = 'block';
+            }
+
+            if (isValid) {
+                // Simulate API Call / Success
+                const btn = form.querySelector('.btn-bee-submit');
+                const originalText = btn.innerHTML;
+                
+                // Add simple text for loading state, avoiding spinner dependency if not present
+                btn.innerHTML = 'Sending...';
+                btn.disabled = true;
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    
+                    const formState = document.getElementById('contactFormState');
+                    const successState = document.getElementById('contactSuccessState');
+                    
+                    if (formState && successState) {
+                        formState.style.display = 'none';
+                        successState.style.display = 'block';
+                        
+                        // Trigger checkmark animation
+                        const checkmark = successState.querySelector('.checkmark');
+                        if (checkmark) {
+                            void checkmark.offsetWidth; // Force reflow
+                            checkmark.style.animation = 'drawCheck 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards 0.2s';
+                        }
+                    }
+                }, 1200);
+            }
+        });
+        
+        // Remove error state on input
+        form.querySelectorAll('.bee-form-control, .bee-form-select').forEach(input => {
+            input.addEventListener('input', function() {
+                this.classList.remove('is-invalid');
+                if (this.nextElementSibling && this.nextElementSibling.classList.contains('bee-invalid-feedback')) {
+                    this.nextElementSibling.style.display = 'none';
+                }
+            });
+        });
+    }
+};

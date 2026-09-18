@@ -1,0 +1,106 @@
+<div class="bee-modal-overlay" id="contactModalOverlay" aria-hidden="true">
+    <div class="bee-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+        <!-- Close Button -->
+        <button type="button" class="bee-modal-close" id="contactModalClose" aria-label="Close contact form">
+            &times;
+        </button>
+
+        <div class="bee-modal-content">
+            <!-- Left Brand Panel -->
+            <div class="bee-modal-brand">
+                <div class="bee-modal-brand-inner">
+                    <span class="eyebrow-pill bee-modal-pill border-0 bg-dark text-white">Let's make something grow</span>
+                    <h2 id="contactModalTitle" class="bee-modal-title">
+                        Let's grow your brand.
+                    </h2>
+                    <p class="bee-modal-desc">
+                        Tell us what you're building, what you're trying to achieve, and where you'd like to grow. We'll take it from there.
+                    </p>
+                    
+                    <!-- Decorative Element -->
+                    <div class="bee-modal-decor" aria-hidden="true">
+                        <div class="hex-outline-sm"></div>
+                        <div class="hex-filled-sm"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Form Panel -->
+            <div class="bee-modal-form-container">
+                
+                <!-- Initial Form State -->
+                <div id="contactFormState">
+                    <h3 class="bee-form-title text-dark">Tell us about your project.</h3>
+                    <p class="bee-form-desc text-muted">A few details are enough. We'll get back to you shortly.</p>
+
+                    <form id="beeContactForm" novalidate>
+                        <div class="row bee-form-row">
+                            <div class="col-md-6">
+                                <label for="contactName" class="form-label visually-hidden">Full Name</label>
+                                <input type="text" class="bee-form-control" id="contactName" placeholder="Full Name" required>
+                                <div class="bee-invalid-feedback">Please enter your name.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="contactEmail" class="form-label visually-hidden">Work Email</label>
+                                <input type="email" class="bee-form-control" id="contactEmail" placeholder="Work Email" required>
+                                <div class="bee-invalid-feedback">Please enter a valid email.</div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="contactPhone" class="form-label visually-hidden">Phone / WhatsApp</label>
+                                <input type="tel" class="bee-form-control" id="contactPhone" placeholder="Phone / WhatsApp">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="contactCompany" class="form-label visually-hidden">Company / Brand</label>
+                                <input type="text" class="bee-form-control" id="contactCompany" placeholder="Company / Brand">
+                            </div>
+
+                            <div class="col-12">
+                                <label for="contactService" class="form-label bee-form-label text-dark">What can we help with?</label>
+                                <div class="bee-select-wrapper">
+                                    <select class="bee-form-select" id="contactService" required>
+                                        <option value="General Enquiry">General Enquiry</option>
+                                        <option value="Meta Ads">Meta Ads</option>
+                                        <option value="Google Ads">Google Ads</option>
+                                        <option value="Social Media Management">Social Media Management</option>
+                                        <option value="Content Production">Content Production</option>
+                                        <option value="Web Development">Web Development</option>
+                                        <option value="AI Automations">AI Automations</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <label for="contactGoals" class="form-label bee-form-label text-dark">Tell us about your goals (Optional)</label>
+                                <textarea class="bee-form-control bee-textarea" id="contactGoals" placeholder="Project details, budget expectations, timeline..."></textarea>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="btn-bee-submit w-100">
+                                    <span class="submit-text">Send Inquiry</span> <span class="arrow">&rarr;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Success State (Hidden by default) -->
+                <div id="contactSuccessState" class="bee-success-state" style="display: none; text-align: center;">
+                    <div class="success-icon-wrapper mb-4 d-inline-block">
+                        <svg class="success-icon" viewBox="0 0 24 24" width="64" height="64" style="overflow: visible;">
+                            <circle cx="12" cy="12" r="11" fill="none" stroke="#FED303" stroke-width="1.5" stroke-dasharray="70" stroke-dashoffset="0" />
+                            <path d="M7 12l3.5 3.5 6.5-7" fill="none" stroke="#050505" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3 class="h2 fw-bold mb-3 text-dark" style="font-family: var(--font-primary);">You're on the list.</h3>
+                    <p class="text-muted mb-5 fs-6" style="max-width: 320px; margin-inline: auto;">Thanks for reaching out. We'll be in touch shortly to discuss how we can grow your brand.</p>
+                    <button type="button" class="btn-bee-submit" id="contactModalCloseSuccess">
+                        Back to website
+                    </button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>

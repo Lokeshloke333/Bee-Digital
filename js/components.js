@@ -12,6 +12,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     loadComponent('site-footer', 'components/footer.html');
+
+    // 2. Load Contact Modal globally
+    let modalContainer = document.getElementById('site-modal');
+    if (!modalContainer) {
+        modalContainer = document.createElement('div');
+        modalContainer.id = 'site-modal';
+        document.body.appendChild(modalContainer);
+    }
+    loadComponent('site-modal', 'components/contact-modal.html', () => {
+        // Initialize modal logic after it's loaded into the DOM
+        if (typeof window.initContactModal === 'function') {
+            window.initContactModal();
+        }
+    });
 });
 
 /**

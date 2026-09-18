@@ -29,14 +29,32 @@
 
     <!-- Hero Section -->
     <section class="hero position-relative d-flex align-items-center justify-content-center text-center">
-        <!-- Decorative Background Elements -->
-        <div class="pattern-grid"></div>
-        <div class="glow-yellow"></div>
-        
-        <!-- CSS Hexagons (Decorative) -->
-        <div class="hex-decor hex-1"></div>
-        <div class="hex-decor hex-2"></div>
-        <div class="hex-decor hex-3"></div>
+        <!-- Premium Decorative Background Elements -->
+        <div class="hero-bg-elements" aria-hidden="true">
+            <!-- Grid is handled via background on .hero or .hero-bg-elements -->
+            <div class="hero-glow hero-glow-1"></div>
+            <div class="hero-glow hero-glow-2"></div>
+            
+            <div class="hero-shape hero-shape-tr"></div>
+            <div class="hero-shape hero-shape-bl"></div>
+            
+            <div class="hero-arc hero-arc-tr"></div>
+            <div class="hero-arc hero-arc-bl"></div>
+            
+            <!-- Hexagon Cluster Top-Left -->
+            <div class="hex-cluster hex-cluster-tl">
+                <div class="hex hex-filled-main"></div>
+                <div class="hex hex-outline-main"></div>
+                <div class="hex hex-small"></div>
+            </div>
+            
+            <!-- Hexagon Cluster Bottom-Right -->
+            <div class="hex-cluster hex-cluster-br">
+                <div class="hex hex-filled-main"></div>
+                <div class="hex hex-outline-main"></div>
+                <div class="hex hex-small"></div>
+            </div>
+        </div>
         
         <div class="container position-relative z-1">
             <div class="row justify-content-center">
@@ -48,7 +66,7 @@
                     
                     <!-- Main Heading -->
                     <h1 class="hero-heading mb-4 reveal">
-                        Let's <span class="bee-highlight">Bee</span> Your Brand's Voice.
+                        <span class="hero-heading-light">Let's</span> <span class="bee-highlight hero-heading-bee">Bee</span> <span class="hero-heading-light">Your Brand's Voice.</span>
                     </h1>
                     
                     <!-- Supporting Text -->
@@ -65,25 +83,46 @@
         </div>
     </section>
 
-    <!-- Trust Bar / Statistics -->
-    <section class="trust-bar py-5 border-top border-bottom bg-light">
+    <!-- Premium Trust Bar / Statistics -->
+    <section class="trust-bar" aria-label="Bee Digital statistics">
         <div class="container">
-            <div class="row g-4 text-center">
-                <div class="col-6 col-lg-3 reveal">
-                    <h2 class="display-4 fw-bold mb-0">40+</h2>
-                    <p class="text-muted fw-medium mb-0">Brands Served</p>
+            <div class="trust-wrapper reveal">
+                <!-- Eyebrow Label -->
+                <div class="trust-eyebrow text-center mb-4">
+                    <span class="trust-dot"></span> TRUSTED BY GROWING BRANDS
                 </div>
-                <div class="col-6 col-lg-3 reveal">
-                    <h2 class="display-4 fw-bold mb-0 text-yellow">5+</h2>
-                    <p class="text-muted fw-medium mb-0">Years Experience</p>
-                </div>
-                <div class="col-6 col-lg-3 reveal">
-                    <h2 class="display-4 fw-bold mb-0">20+</h2>
-                    <p class="text-muted fw-medium mb-0">Campaigns Managed</p>
-                </div>
-                <div class="col-6 col-lg-3 reveal">
-                    <h2 class="display-4 fw-bold mb-0 text-yellow">11x</h2>
-                    <p class="text-muted fw-medium mb-0">Peak Campaign ROI</p>
+                
+                <div class="trust-container">
+                    <div class="row g-0 text-center">
+                        <!-- Stat 1 -->
+                        <div class="col-6 col-lg-3 trust-item">
+                            <div class="trust-stat">
+                                <span class="counter" data-target="40">0</span><span class="trust-suffix text-black">+</span>
+                            </div>
+                            <p class="trust-label">Brands Served</p>
+                        </div>
+                        <!-- Stat 2 -->
+                        <div class="col-6 col-lg-3 trust-item">
+                            <div class="trust-stat">
+                                <span class="counter" data-target="5">0</span><span class="trust-suffix text-yellow">+</span>
+                            </div>
+                            <p class="trust-label">Years Experience</p>
+                        </div>
+                        <!-- Stat 3 -->
+                        <div class="col-6 col-lg-3 trust-item">
+                            <div class="trust-stat">
+                                <span class="counter" data-target="20">0</span><span class="trust-suffix text-black">+</span>
+                            </div>
+                            <p class="trust-label">Campaigns Managed</p>
+                        </div>
+                        <!-- Stat 4 -->
+                        <div class="col-6 col-lg-3 trust-item border-0">
+                            <div class="trust-stat">
+                                <span class="counter" data-target="11">0</span><span class="trust-suffix text-yellow">x</span>
+                            </div>
+                            <p class="trust-label">Peak Campaign ROI</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -103,6 +142,11 @@
                 <!-- Service Card 1 -->
                 <div class="col-md-6 col-lg-4 reveal">
                     <div class="service-card h-100 p-4 p-xl-5 position-relative">
+                        <div class="hex-decoration" aria-hidden="true">
+                            <div class="hex-outline"></div>
+                            <div class="hex-filled"></div>
+                            <div class="hex-dot"></div>
+                        </div>
                         <div class="service-number">01</div>
                         <h3 class="h4 fw-bold mt-4 mb-3">Meta Ads</h3>
                         <p class="text-muted mb-4">Highly targeted Facebook and Instagram campaigns designed to increase reach, engagement and conversions.</p>
@@ -115,7 +159,12 @@
                 
                 <!-- Service Card 2 -->
                 <div class="col-md-6 col-lg-4 reveal">
-                    <div class="service-card h-100 p-4 p-xl-5 position-relative">
+                    <div class="service-card h-100 p-4 p-xl-5 position-relative contact-trigger" data-service="Meta Ads" style="cursor: pointer;">
+                        <div class="hex-decoration" aria-hidden="true">
+                            <div class="hex-outline"></div>
+                            <div class="hex-filled"></div>
+                            <div class="hex-dot"></div>
+                        </div>
                         <div class="service-number">02</div>
                         <h3 class="h4 fw-bold mt-4 mb-3">Google Ads</h3>
                         <p class="text-muted mb-4">Search, display and performance campaigns focused on measurable business outcomes and intent.</p>
@@ -128,7 +177,12 @@
                 
                 <!-- Service Card 3 -->
                 <div class="col-md-6 col-lg-4 reveal">
-                    <div class="service-card h-100 p-4 p-xl-5 position-relative">
+                    <div class="service-card h-100 p-4 p-xl-5 position-relative contact-trigger" data-service="Google Ads" style="cursor: pointer;">
+                        <div class="hex-decoration" aria-hidden="true">
+                            <div class="hex-outline"></div>
+                            <div class="hex-filled"></div>
+                            <div class="hex-dot"></div>
+                        </div>
                         <div class="service-number">03</div>
                         <h3 class="h4 fw-bold mt-4 mb-3">Social Media Management</h3>
                         <p class="text-muted mb-4">End-to-end content strategy covering planning, posting, community management and brand voice.</p>
@@ -141,7 +195,12 @@
                 
                 <!-- Service Card 4 -->
                 <div class="col-md-6 col-lg-4 reveal">
-                    <div class="service-card h-100 p-4 p-xl-5 position-relative">
+                    <div class="service-card h-100 p-4 p-xl-5 position-relative contact-trigger" data-service="Social Media Management" style="cursor: pointer;">
+                        <div class="hex-decoration" aria-hidden="true">
+                            <div class="hex-outline"></div>
+                            <div class="hex-filled"></div>
+                            <div class="hex-dot"></div>
+                        </div>
                         <div class="service-number">04</div>
                         <h3 class="h4 fw-bold mt-4 mb-3">Content Production</h3>
                         <p class="text-muted mb-4">Short-form content, reels, high-quality creatives and visual storytelling that stops the scroll.</p>
@@ -154,7 +213,12 @@
                 
                 <!-- Service Card 5 -->
                 <div class="col-md-6 col-lg-4 reveal">
-                    <div class="service-card h-100 p-4 p-xl-5 position-relative">
+                    <div class="service-card h-100 p-4 p-xl-5 position-relative contact-trigger" data-service="Content Production" style="cursor: pointer;">
+                        <div class="hex-decoration" aria-hidden="true">
+                            <div class="hex-outline"></div>
+                            <div class="hex-filled"></div>
+                            <div class="hex-dot"></div>
+                        </div>
                         <div class="service-number">05</div>
                         <h3 class="h4 fw-bold mt-4 mb-3">Web Development</h3>
                         <p class="text-muted mb-4">Fast, responsive, and conversion-focused websites engineered to turn traffic into actual customers.</p>
@@ -167,7 +231,12 @@
                 
                 <!-- Service Card 6 -->
                 <div class="col-md-6 col-lg-4 reveal">
-                    <div class="service-card h-100 p-4 p-xl-5 position-relative">
+                    <div class="service-card h-100 p-4 p-xl-5 position-relative contact-trigger" data-service="AI Automations" style="cursor: pointer;">
+                        <div class="hex-decoration" aria-hidden="true">
+                            <div class="hex-outline"></div>
+                            <div class="hex-filled"></div>
+                            <div class="hex-dot"></div>
+                        </div>
                         <div class="service-number">06</div>
                         <h3 class="h4 fw-bold mt-4 mb-3">AI Automations</h3>
                         <p class="text-muted mb-4">Automated workflows for reporting, lead management, and streamlining repetitive business processes.</p>
@@ -340,7 +409,7 @@
                 <p class="text-lead text-muted mx-auto mb-5" style="max-width: 600px;">
                     Tell us your goal and we'll build the right content and campaign system to get you there.
                 </p>
-                <a href="#contact" class="btn-bee btn-primary btn-lg px-5 py-3">Let's Talk &rarr;</a>
+                <a href="#contact" class="btn-bee btn-primary btn-lg px-5 py-3 contact-trigger" data-service="General Enquiry">Let's Talk &rarr;</a>
             </div>
         </div>
     </section>
