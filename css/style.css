@@ -2640,3 +2640,206 @@ body.js-enabled .reveal.active .cta-geometric-decor {
         display: none;
     }
 }
+
+/* ==========================================================================
+   ABOUT PAGE STYLES
+   ========================================================================== */
+
+/* 1. Hero Section */
+.headline-split {
+    line-height: 1.1;
+}
+.headline-split span.reveal {
+    display: inline-block;
+}
+
+/* 2. Philosophy Cards */
+.philosophy-card {
+    background-color: #111;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 1;
+}
+
+.philosophy-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 208, 0, 0.3);
+    background-color: #151515;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255, 208, 0, 0.1);
+}
+
+.philosophy-icon {
+    bottom: -20px;
+    right: -20px;
+    color: #fff;
+    transition: all 0.5s ease;
+    z-index: -1;
+}
+
+.philosophy-card:hover .philosophy-icon {
+    opacity: 0.2 !important;
+    transform: scale(1.1) rotate(-5deg);
+    color: var(--bee-yellow);
+}
+
+/* 3. Approach Timeline */
+.approach-timeline {
+    padding-left: 30px;
+}
+
+.timeline-track {
+    position: absolute;
+    top: 20px;
+    bottom: 20px;
+    left: 15px;
+    width: 2px;
+    background-color: rgba(0,0,0,0.05);
+    z-index: 1;
+}
+
+.timeline-progress {
+    position: absolute;
+    top: 20px;
+    bottom: 20px;
+    left: 15px;
+    width: 2px;
+    background-color: var(--bee-yellow);
+    z-index: 2;
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: transform 1.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.approach-timeline.is-revealed .timeline-progress {
+    transform: scaleY(1);
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 40px;
+    padding-left: 30px;
+}
+
+.timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -31px;
+    top: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    z-index: 3;
+    box-shadow: 0 0 0 6px #f8f9fa; /* matches bg-light */
+    transition: transform 0.4s ease;
+}
+
+.timeline-item:hover .timeline-marker {
+    transform: scale(1.1);
+}
+
+.timeline-content-card {
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.03);
+}
+.timeline-content-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important;
+    border-color: rgba(255, 208, 0, 0.2);
+}
+
+@media (min-width: 768px) {
+    .approach-timeline {
+        padding-left: 0;
+    }
+    .timeline-track, .timeline-progress {
+        left: 50%;
+    }
+    .timeline-item {
+        width: 50%;
+        padding-left: 0;
+        padding-bottom: 60px;
+    }
+    .timeline-item:nth-child(odd) {
+        left: 0;
+        padding-right: 40px;
+        text-align: right;
+    }
+    .timeline-item:nth-child(even) {
+        left: 50%;
+        padding-left: 40px;
+    }
+    .timeline-marker {
+        left: auto;
+        right: -16px;
+    }
+    .timeline-item:nth-child(even) .timeline-marker {
+        left: -16px;
+        right: auto;
+    }
+}
+
+/* 4. Bento Grid (Capabilities) */
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+    auto-rows: minmax(200px, auto);
+}
+
+@media (min-width: 768px) {
+    .bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .bento-grid {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, 280px);
+    }
+    
+    .bento-large {
+        grid-column: span 2;
+        grid-row: span 2;
+    }
+    
+    .bento-wide {
+        grid-column: span 2;
+    }
+}
+
+.bento-item {
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.bento-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.04);
+}
+
+.bento-item.bg-bee-black:hover {
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+}
+
+/* 5. Oversized Statements */
+.oversized-statements h3 {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* 6. Missing Utilities */
+.bg-bee-black {
+    background-color: var(--bee-black);
+}
+
+.glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+}
