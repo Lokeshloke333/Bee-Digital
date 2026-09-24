@@ -264,13 +264,21 @@ window.initContactModal = function() {
 
     // Form Validation and Submit
     if (form) {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             let isValid = true;
             const name = document.getElementById('contactName');
             const email = document.getElementById('contactEmail');
+            const phone = document.getElementById('contactPhone');
+            const company = document.getElementById('contactCompany');
+            const service = document.getElementById('contactService');
+            const message = document.getElementById('contactGoals');
+            const honeypot = document.getElementById('contactHoneypot');
+            const errorAlert = document.getElementById('contactErrorAlert');
             
+            if (errorAlert) errorAlert.style.display = 'none';
+
             // Basic reset
             form.querySelectorAll('.bee-invalid-feedback').forEach(el => el.style.display = 'none');
             form.querySelectorAll('.bee-form-control').forEach(el => el.classList.remove('is-invalid'));
@@ -287,20 +295,59 @@ window.initContactModal = function() {
                 email.classList.add('is-invalid');
                 email.nextElementSibling.style.display = 'block';
             }
+            
+            // Basic phone validation (allowing digits, +, spaces, hyphens, min length 6)
+            const phoneRegex = /^[0-9+\-\s()]{6,20}$/;
+            if (!phone.value.trim() || !phoneRegex.test(phone.value.trim())) {
+                isValid = false;
+                phone.classList.add('is-invalid');
+                if (phone.nextElementSibling && phone.nextElementSibling.classList.contains('bee-invalid-feedback')) {
+                    phone.nextElementSibling.style.display = 'block';
+                }
+            }
+            
+            if (!company.value.trim()) {
+                isValid = false;
+                company.classList.add('is-invalid');
+                if (company.nextElementSibling && company.nextElementSibling.classList.contains('bee-invalid-feedback')) {
+                    company.nextElementSibling.style.display = 'block';
+                }
+            }
 
             if (isValid) {
-                // Simulate API Call / Success
+                // Check honeypot
+                if (honeypot && honeypot.value) {
+                    console.warn('Bot detected');
+                    return; // silently fail
+                }
+
                 const btn = form.querySelector('.btn-bee-submit');
                 const originalText = btn.innerHTML;
                 
-                // Add simple text for loading state, avoiding spinner dependency if not present
-                btn.innerHTML = 'Sending...';
+                btn.innerHTML = 'Sending Inquiry...';
                 btn.disabled = true;
 
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                    
+                try {
+                    const response = await fetch('/api/contact', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            name: name.value.trim(),
+                            email: email.value.trim(),
+                            phone: phone.value.trim(),
+                            company: company.value.trim(),
+                            service: service.value,
+                            message: message.value.trim()
+                        }),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    // Success
                     const formState = document.getElementById('contactFormState');
                     const successState = document.getElementById('contactSuccessState');
                     
@@ -315,7 +362,13 @@ window.initContactModal = function() {
                             checkmark.style.animation = 'drawCheck 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards 0.2s';
                         }
                     }
-                }, 1200);
+                } catch (error) {
+                    console.error('Error sending inquiry:', error);
+                    if (errorAlert) errorAlert.style.display = 'block';
+                } finally {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
             }
         });
         

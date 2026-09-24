@@ -35,30 +35,38 @@
 
                     <form id="beeContactForm" novalidate>
                         <div class="row bee-form-row">
+                            <!-- Honeypot Field -->
+                            <div class="bee-honeypot" style="display: none;" aria-hidden="true">
+                                <label for="contactHoneypot">Leave this field empty if you are human</label>
+                                <input type="text" id="contactHoneypot" name="contactHoneypot" tabindex="-1" autocomplete="off">
+                            </div>
+                            
                             <div class="col-md-6">
                                 <label for="contactName" class="form-label visually-hidden">Full Name</label>
-                                <input type="text" class="bee-form-control" id="contactName" placeholder="Full Name" required>
+                                <input type="text" class="bee-form-control" id="contactName" name="name" placeholder="Full Name" required>
                                 <div class="bee-invalid-feedback">Please enter your name.</div>
                             </div>
                             <div class="col-md-6">
                                 <label for="contactEmail" class="form-label visually-hidden">Work Email</label>
-                                <input type="email" class="bee-form-control" id="contactEmail" placeholder="Work Email" required>
+                                <input type="email" class="bee-form-control" id="contactEmail" name="email" placeholder="Work Email" required>
                                 <div class="bee-invalid-feedback">Please enter a valid email.</div>
                             </div>
                             
                             <div class="col-md-6">
                                 <label for="contactPhone" class="form-label visually-hidden">Phone / WhatsApp</label>
-                                <input type="tel" class="bee-form-control" id="contactPhone" placeholder="Phone / WhatsApp">
+                                <input type="tel" class="bee-form-control" id="contactPhone" name="phone" placeholder="Phone / WhatsApp" required>
+                                <div class="bee-invalid-feedback">Please enter a valid phone number.</div>
                             </div>
                             <div class="col-md-6">
                                 <label for="contactCompany" class="form-label visually-hidden">Company / Brand</label>
-                                <input type="text" class="bee-form-control" id="contactCompany" placeholder="Company / Brand">
+                                <input type="text" class="bee-form-control" id="contactCompany" name="company" placeholder="Company / Brand" required>
+                                <div class="bee-invalid-feedback">Please enter your company or brand name.</div>
                             </div>
 
                             <div class="col-12">
                                 <label for="contactService" class="form-label bee-form-label text-dark">What can we help with?</label>
                                 <div class="bee-select-wrapper">
-                                    <select class="bee-form-select" id="contactService" required>
+                                    <select class="bee-form-select" id="contactService" name="service" required>
                                         <option value="General Enquiry">General Enquiry</option>
                                         <option value="Meta Ads">Meta Ads</option>
                                         <option value="Google Ads">Google Ads</option>
@@ -73,7 +81,14 @@
                             
                             <div class="col-12">
                                 <label for="contactGoals" class="form-label bee-form-label text-dark">Tell us about your goals (Optional)</label>
-                                <textarea class="bee-form-control bee-textarea" id="contactGoals" placeholder="Project details, budget expectations, timeline..."></textarea>
+                                <textarea class="bee-form-control bee-textarea" id="contactGoals" name="message" placeholder="Project details, budget expectations, timeline..."></textarea>
+                            </div>
+                            
+                            <!-- Error Alert (Hidden by default) -->
+                            <div class="col-12" id="contactErrorAlert" style="display: none;">
+                                <div class="alert alert-danger font-secondary small p-2 mb-3" role="alert">
+                                    Something went wrong while sending your inquiry. Please try again.
+                                </div>
                             </div>
 
                             <div class="col-12">

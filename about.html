@@ -31,9 +31,54 @@
         <div class="pattern-grid"></div>
         <div class="glow-yellow position-absolute" style="top: -20%; right: -10%; opacity: 0.3; width: 60vw; height: 60vw;"></div>
         
+        <style>
+            .hero-illustration-container {
+                position: relative;
+                max-width: 550px;
+                margin: 0 auto;
+                opacity: 0;
+                animation: fadeScaleIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                animation-delay: 0.6s; /* Staggered after text */
+            }
+            .hero-illustration {
+                animation: floatIllustration 6s ease-in-out infinite alternate;
+                filter: drop-shadow(0 20px 40px rgba(0,0,0,0.06));
+            }
+            .hero-illustration-glow {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 80%;
+                height: 80%;
+                background: radial-gradient(circle, rgba(254, 211, 3, 0.15) 0%, rgba(254, 211, 3, 0) 70%);
+                filter: blur(25px);
+                z-index: -1;
+                animation: floatGlow 10s ease-in-out infinite alternate;
+            }
+            @keyframes fadeScaleIn {
+                0% { opacity: 0; transform: scale(0.96); }
+                100% { opacity: 1; transform: scale(1); }
+            }
+            @keyframes floatIllustration {
+                0% { transform: translateY(0); }
+                100% { transform: translateY(-12px); }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .hero-illustration, .hero-illustration-glow, .hero-illustration-container { 
+                    animation: none !important; 
+                }
+                .hero-illustration-container {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+        </style>
+
         <div class="container position-relative z-1 pt-5 mt-5">
             <div class="row align-items-center pt-5">
-                <div class="col-lg-10 col-xl-9">
+                <!-- Text Column (Left on Desktop, Top on Mobile) -->
+                <div class="col-lg-6 col-xl-6 mb-5 mb-lg-0 pe-lg-4 pe-xl-5">
                     <span class="eyebrow text-yellow font-secondary fw-bold text-uppercase reveal d-block mb-3" style="letter-spacing: 0.15em;">ABOUT BEE DIGITAL</span>
                     
                     <!-- Line-by-line reveal via spans -->
@@ -50,6 +95,14 @@
                         <p class="font-secondary small text-muted m-0" style="max-width: 500px; line-height: 1.6;">
                             Bee Digital is a growth-focused digital agency helping ambitious brands build attention, create connection and turn that attention into measurable business outcomes.
                         </p>
+                    </div>
+                </div>
+
+                <!-- Image Column (Right on Desktop, Bottom on Mobile) -->
+                <div class="col-lg-6 col-xl-6 text-center">
+                    <div class="hero-illustration-container">
+                        <div class="hero-illustration-glow"></div>
+                        <img src="images/Abouthero.png" alt="Bee Digital Honeycomb and Bee Illustration" class="img-fluid hero-illustration w-100 h-auto" style="object-fit: contain; max-height: 70vh;">
                     </div>
                 </div>
             </div>
@@ -431,12 +484,7 @@
 
     <!-- 07 RESULTS / PROOF -->
     <section class="section-padding bg-bee-black position-relative text-white overflow-hidden">
-        <!-- Abstract Decoration -->
-        <div class="position-absolute end-0 bottom-0 opacity-10 pe-none">
-            <svg width="400" height="400" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <path fill="#FFD000" d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,81.4,-46.3C91,-33.5,97.2,-18,97,-2.3C96.8,13.4,90.2,28.9,81.1,42.5C72.1,56.1,60.6,67.8,47.2,76.5C33.8,85.2,18.5,90.9,2.8,87.6C-12.9,84.3,-28.2,72,-42.6,61.4C-57,50.8,-70.5,41.9,-78.9,29.3C-87.3,16.7,-90.6,0.4,-86.3,-14.2C-82,-28.8,-70.1,-41.7,-57.4,-50.7C-44.7,-59.7,-31.2,-64.8,-17.7,-68.6C-4.2,-72.4,9.3,-74.9,23.3,-76.3C37.3,-77.7,44.7,-76.4,44.7,-76.4Z" transform="translate(100 100) scale(1.1)" />
-            </svg>
-        </div>
+
         
         <div class="container position-relative z-1 reveal">
             <div class="text-center mb-5 pb-4">
