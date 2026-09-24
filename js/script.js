@@ -383,3 +383,77 @@ window.initContactModal = function() {
         });
     }
 };
+
+// Portfolio Logic
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Portfolio Lightbox Modal
+    const portfolioCards = document.querySelectorAll('.portfolio-card');
+    const portfolioModalImage = document.getElementById('portfolioModalImage');
+    
+    if (portfolioCards.length > 0 && portfolioModalImage) {
+        portfolioCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const img = this.querySelector('.portfolio-img');
+                if (img) {
+                    portfolioModalImage.src = img.src;
+                    portfolioModalImage.alt = img.alt;
+                    
+                    const modalEl = document.getElementById('portfolioModal');
+                    if (modalEl && window.bootstrap) {
+                        const modal = new bootstrap.Modal(modalEl);
+                        modal.show();
+                    }
+                }
+            });
+        });
+    }
+
+    // 2. Portfolio Filtering
+    const filterBtns = document.querySelectorAll('.portfolio-filter-btn');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    const emptyState = document.getElementById('portfolio-empty');
+
+    if (filterBtns.length > 0 && portfolioItems.length > 0) {
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Update active state on buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const filterValue = this.getAttribute('data-filter');
+                let visibleCount = 0;
+
+                portfolioItems.forEach(item => {
+                    const itemCategory = item.getAttribute('data-category');
+                    
+                    // Simple animation reset
+                    item.style.transition = 'none';
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.95)';
+                    
+                    if (filterValue === 'all' || itemCategory === filterValue) {
+                        item.classList.remove('d-none');
+                        visibleCount++;
+                        
+                        // Force reflow then animate in
+                        setTimeout(() => {
+                            item.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 50);
+                    } else {
+                        item.classList.add('d-none');
+                    }
+                });
+
+                if (emptyState) {
+                    if (visibleCount === 0) {
+                        emptyState.classList.remove('d-none');
+                    } else {
+                        emptyState.classList.add('d-none');
+                    }
+                }
+            });
+        });
+    }
+});
