@@ -615,106 +615,199 @@ img {
 }
 
 /* ==========================================================================
-   8b. Premium Trust Bar / Statistics
+   8b. Editorial Trust Strip / Performance Credibility
    ========================================================================== */
-.trust-bar {
-    padding-top: 55px;
-    padding-bottom: 55px;
-    background-color: var(--color-gray-50);
+.trust-strip {
     position: relative;
+    padding-top: clamp(42px, 4.5vw, 54px);
+    padding-bottom: clamp(44px, 5vw, 58px);
+    background-color: #FAFAF9;
+    border-top: 1px solid rgba(5, 5, 5, 0.05);
+    border-bottom: 1px solid rgba(5, 5, 5, 0.04);
+    overflow: hidden;
     z-index: 10;
 }
 
-.trust-wrapper {
-    max-width: 1240px;
-    margin: 0 auto;
-    position: relative;
+/* Subtle ambient connection to hero: faint grid lines + soft yellow glow */
+.trust-strip-ambient {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: 
+        linear-gradient(to right, rgba(5, 5, 5, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(5, 5, 5, 0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+    background-position: center top;
 }
 
-.trust-eyebrow {
+.trust-ambient-glow {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 180px;
+    background: radial-gradient(ellipse at center, rgba(255, 210, 28, 0.07) 0%, rgba(255, 210, 28, 0.015) 50%, transparent 70%);
+    pointer-events: none;
+}
+
+/* Editorial Trust Eyebrow */
+.trust-strip-wrapper {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.trust-strip-header {
+    margin-bottom: clamp(24px, 2.5vw, 34px);
+}
+
+.trust-strip-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.trust-accent-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #FFD21C;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 8px rgba(255, 210, 28, 0.7);
+    flex-shrink: 0;
+}
+
+.trust-eyebrow-text {
     font-family: var(--font-secondary);
-    font-size: 12px;
-    letter-spacing: 0.12em;
+    font-size: 11.5px;
+    letter-spacing: 0.16em;
     font-weight: 600;
-    color: var(--color-gray-400);
+    color: #71717A;
     text-transform: uppercase;
 }
 
-.trust-dot {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    background-color: var(--bee-yellow);
-    border-radius: 50%;
-    margin-right: 8px;
-    vertical-align: middle;
-}
-
-.trust-container {
-    background: rgba(255, 255, 255, 0.7);
-    border: 1px solid rgba(5, 5, 5, 0.08);
-    border-radius: 24px;
-    padding: 40px;
-    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05);
+/* Statistic Item: Editorial Left-Aligned Architecture */
+.trust-stat-col {
     position: relative;
 }
 
-.trust-item {
-    border-right: 1px solid rgba(5, 5, 5, 0.06);
-    padding: 0 20px;
-    transition: transform var(--transition-normal);
+.trust-stat-item {
+    position: relative;
+    padding: 0;
+    text-align: left;
+    transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1);
+    cursor: default;
 }
 
-.trust-item.border-0 {
-    border-right: none !important;
+/* Subtle hairline indicator above stat */
+.trust-stat-line {
+    width: 24px;
+    height: 1.5px;
+    background-color: rgba(5, 5, 5, 0.12);
+    margin-bottom: 14px;
+    transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease;
 }
 
-@media (hover: hover) {
-    .trust-item:hover {
-        transform: translateY(-3px);
-    }
+.trust-stat-item:hover .trust-stat-line {
+    width: 36px;
+    background-color: #FFD21C;
 }
 
-.trust-stat {
+.trust-stat-number {
     font-family: var(--font-primary);
-    font-size: clamp(40px, 4vw, 64px);
-    font-weight: 600;
-    color: var(--bee-black);
-    line-height: 1;
+    font-size: clamp(48px, 4.2vw, 60px);
+    font-weight: 500;
+    color: #050505;
+    line-height: 0.98;
+    letter-spacing: -0.025em;
     margin-bottom: 8px;
-    letter-spacing: -0.02em;
+    display: flex;
+    align-items: baseline;
+    transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.trust-stat-item:hover .trust-stat-number {
+    transform: translateY(-3px);
 }
 
 .trust-suffix {
-    font-weight: 800;
+    font-family: var(--font-primary);
+    font-size: 0.8em;
+    font-weight: 600;
+    margin-left: 2px;
+    display: inline-block;
+    transition: transform 0.25s ease, text-shadow 0.25s ease;
 }
 
-.trust-label {
+/* Selective accents per prompt instruction:
+   Keep most numbers black.
+   Bee Yellow only as subtle accent:
+   the "+" on 5+ and "x" on 11x
+*/
+.trust-suffix.text-yellow-accent {
+    color: #FFD21C;
+}
+
+.trust-stat-item:hover .trust-suffix.text-yellow-accent {
+    text-shadow: 0 0 10px rgba(255, 210, 28, 0.45);
+}
+
+.trust-suffix.text-dark-accent {
+    color: #050505;
+    opacity: 0.9;
+}
+
+.trust-stat-label {
     font-family: var(--font-secondary);
-    font-size: 15px;
+    font-size: clamp(14px, 1.1vw, 16px);
     font-weight: 500;
-    color: var(--color-gray-600);
+    color: #52525B;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
     margin-bottom: 0;
+    transition: color 0.25s ease;
 }
 
-/* Trust Bar Mobile/Tablet Layout */
+.trust-stat-item:hover .trust-stat-label {
+    color: #050505;
+}
+
+/* Mobile & Tablet Adjustments: Clean 2x2 Grid */
 @media (max-width: 991px) {
-    .trust-container {
-        padding: 30px 20px;
+    .trust-strip {
+        padding-top: 36px;
+        padding-bottom: 40px;
+    }
+    
+    .trust-stat-number {
+        font-size: clamp(38px, 7vw, 48px);
+    }
+    
+    .trust-stat-label {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 575px) {
+    .trust-strip {
+        padding-top: 30px;
+        padding-bottom: 34px;
     }
 
-    .trust-item {
-        border-right: none;
-        padding: 20px 10px;
+    .trust-strip-header {
+        margin-bottom: 20px;
     }
 
-    .trust-item:nth-child(1),
-    .trust-item:nth-child(2) {
-        border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+    .trust-stat-number {
+        font-size: 34px;
     }
 
-    .trust-item:nth-child(odd) {
-        border-right: 1px solid rgba(5, 5, 5, 0.06);
+    .trust-stat-label {
+        font-size: 13px;
+    }
+    
+    .trust-stat-line {
+        margin-bottom: 8px;
     }
 }
 
@@ -826,10 +919,10 @@ body.js-enabled .reveal:not(.active) {
 }
 
 /* ==========================================================================
-   9. Trust Bar
+   9. Trust Strip
    ========================================================================== */
-.trust-bar {
-    background-color: var(--color-gray-50) !important;
+.trust-strip {
+    background-color: var(--color-gray-50);
 }
 
 /* ==========================================================================
@@ -3239,5 +3332,85 @@ body.js-enabled .reveal.active .cta-geometric-decor {
     .bee-footer-logo {
         height: 38px;
         max-width: 160px;
+    }
+}
+
+/* ==========================================================================
+   16. Playful Floating Brand Mascot Bee Interaction (Global Contact CTA)
+   ========================================================================== */
+.floating-bee-mascot {
+    position: fixed;
+    bottom: 26px;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    cursor: pointer;
+    z-index: 1030;
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    will-change: transform;
+    pointer-events: auto;
+    user-select: none;
+    transform-origin: center center;
+    /* Default initial transform before JS loop executes: horizontally facing right */
+    transform: translate3d(24px, 0, 0) scaleX(1) rotate(90deg);
+}
+
+/* Original Bee Image: clean, untouched dimensions and transparent background */
+.floating-bee-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: none;
+    transform: none !important;
+}
+
+/* Accessible focus ring */
+.floating-bee-mascot:focus-visible {
+    outline: 2px dashed #FFD21C;
+    outline-offset: 4px;
+    border-radius: 50%;
+}
+
+/* Hide bee cleanly when mobile menu or contact modal is active */
+body.menu-open .floating-bee-mascot,
+body.modal-open .floating-bee-mascot,
+.contact-modal-overlay.show ~ .floating-bee-mascot {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+/* Responsive: Tablet Adjustments */
+@media (max-width: 991px) {
+    .floating-bee-mascot {
+        bottom: 22px;
+        width: 42px;
+        height: 42px;
+    }
+}
+
+/* Responsive: Mobile Adjustments */
+@media (max-width: 575px) {
+    .floating-bee-mascot {
+        bottom: 18px;
+        width: 36px;
+        height: 36px;
+        min-width: 44px;
+        min-height: 44px;
     }
 }
