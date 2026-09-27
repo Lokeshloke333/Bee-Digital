@@ -28,7 +28,7 @@ export default async function handler(req, res) {
         // For Vercel, process.env.RESEND_API_KEY must be set in the project settings
         const RESEND_API_KEY = process.env.RESEND_API_KEY;
         const SENDER_EMAIL = process.env.SENDER_EMAIL || 'onboarding@resend.dev'; // Use onboarding for testing, or a custom domain for production
-        
+
         if (!RESEND_API_KEY) {
             console.error('RESEND_API_KEY is not configured');
             return res.status(500).json({ error: 'Server configuration error' });
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
             },
             body: JSON.stringify({
                 from: `Bee Digital Website <${SENDER_EMAIL}>`,
-                to: 'lokeshvanumu61@gmail.com',
+                to: 'thebeedigitalmedia@gmail.com',
                 reply_to: email,
                 subject: 'New Website Inquiry — Bee Digital',
                 html: htmlContent
@@ -53,9 +53,9 @@ export default async function handler(req, res) {
 
         if (!response.ok) {
             console.error('Resend API Error:', data);
-            return res.status(response.status).json({ 
-                error: 'Failed to send email', 
-                details: data 
+            return res.status(response.status).json({
+                error: 'Failed to send email',
+                details: data
             });
         }
 
@@ -70,10 +70,10 @@ export default async function handler(req, res) {
 function escapeHtml(unsafe) {
     if (!unsafe) return '';
     return unsafe
-         .toString()
-         .replace(/&/g, "&amp;")
-         .replace(/</g, "&lt;")
-         .replace(/>/g, "&gt;")
-         .replace(/"/g, "&quot;")
-         .replace(/'/g, "&#039;");
+        .toString()
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }

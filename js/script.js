@@ -386,27 +386,118 @@ window.initContactModal = function() {
 
 // Portfolio Logic
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Portfolio Lightbox Modal
-    const portfolioCards = document.querySelectorAll('.portfolio-card');
-    const portfolioModalImage = document.getElementById('portfolioModalImage');
-    
-    if (portfolioCards.length > 0 && portfolioModalImage) {
-        portfolioCards.forEach(card => {
-            card.addEventListener('click', function() {
-                const img = this.querySelector('.portfolio-img');
-                if (img) {
-                    portfolioModalImage.src = img.src;
-                    portfolioModalImage.alt = img.alt;
-                    
-                    const modalEl = document.getElementById('portfolioModal');
-                    if (modalEl && window.bootstrap) {
-                        const modal = new bootstrap.Modal(modalEl);
-                        modal.show();
-                    }
-                }
-            });
-        });
-    }
+    // 1. Dedicated Portfolio Lightbox Popup
+    const lightbox = document.getElementById('portfolioLightbox');
+    const lightboxImage = document.getElementById('portfolioModalImage');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const lightboxCategory = document.getElementById('lightboxCategory');
+    const lightboxBadge = document.getElementById('lightboxBadge');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxBackdrop = document.getElementById('lightboxBackdrop');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+
+    let currentCardIndex = -1;
+    let visibleCards = [];
+
+    const getVisibleCards = () => {
+        return Array.from(document.querySelectorAll('.portfolio-item:not(.d-none) .portfolio-card'));
+    };
+
+    const updateLightboxContent = (index) => {
+        visibleCards = getVisibleCards();
+        if (index < 0 || index >= visibleCards.length) return;
+        currentCardIndex = index;
+        const card = visibleCards[currentCardIndex];
+        const img = card.querySelector('.portfolio-img');
+        const titleEl = card.querySelector('h3');
+        const subtitleEl = card.querySelector('.portfolio-info span:not(.badge)');
+        const badgeEl = card.querySelector('.portfolio-info .badge');
+
+        if (img && lightboxImage) {
+            lightboxImage.src = img.src;
+            lightboxImage.alt = img.alt || 'Project Preview';
+        }
+        if (titleEl && lightboxTitle) {
+            lightboxTitle.textContent = titleEl.textContent;
+        }
+        if (subtitleEl && lightboxCategory) {
+            lightboxCategory.textContent = subtitleEl.textContent;
+        }
+        if (badgeEl && lightboxBadge) {
+            lightboxBadge.textContent = badgeEl.textContent;
+        }
+
+        if (lightboxPrev) lightboxPrev.style.display = visibleCards.length > 1 ? 'flex' : 'none';
+        if (lightboxNext) lightboxNext.style.display = visibleCards.length > 1 ? 'flex' : 'none';
+    };
+
+    const openLightbox = (card) => {
+        visibleCards = getVisibleCards();
+        const index = visibleCards.indexOf(card);
+        if (index !== -1) {
+            updateLightboxContent(index);
+        } else {
+            const img = card.querySelector('.portfolio-img');
+            const titleEl = card.querySelector('h3');
+            const subtitleEl = card.querySelector('.portfolio-info span:not(.badge)');
+            const badgeEl = card.querySelector('.portfolio-info .badge');
+            if (img && lightboxImage) { lightboxImage.src = img.src; lightboxImage.alt = img.alt || 'Project Preview'; }
+            if (titleEl && lightboxTitle) lightboxTitle.textContent = titleEl.textContent;
+            if (subtitleEl && lightboxCategory) lightboxCategory.textContent = subtitleEl.textContent;
+            if (badgeEl && lightboxBadge) lightboxBadge.textContent = badgeEl.textContent;
+        }
+
+        if (lightbox) {
+            lightbox.classList.add('active');
+            lightbox.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+    };
+
+    const closeLightbox = () => {
+        if (lightbox) {
+            lightbox.classList.remove('active');
+            lightbox.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+    };
+
+    const nextProject = () => {
+        visibleCards = getVisibleCards();
+        if (visibleCards.length === 0) return;
+        const nextIdx = (currentCardIndex + 1) % visibleCards.length;
+        updateLightboxContent(nextIdx);
+    };
+
+    const prevProject = () => {
+        visibleCards = getVisibleCards();
+        if (visibleCards.length === 0) return;
+        const prevIdx = (currentCardIndex - 1 + visibleCards.length) % visibleCards.length;
+        updateLightboxContent(prevIdx);
+    };
+
+    // Global click listener via delegation for all portfolio cards
+    document.addEventListener('click', (e) => {
+        const card = e.target.closest('.portfolio-card');
+        if (card) {
+            e.preventDefault();
+            openLightbox(card);
+        }
+    });
+
+    if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+    if (lightboxBackdrop) lightboxBackdrop.addEventListener('click', closeLightbox);
+    if (lightboxNext) lightboxNext.addEventListener('click', (e) => { e.stopPropagation(); nextProject(); });
+    if (lightboxPrev) lightboxPrev.addEventListener('click', (e) => { e.stopPropagation(); prevProject(); });
+
+    // Keyboard navigation: Escape, Left Arrow, Right Arrow
+    document.addEventListener('keydown', (e) => {
+        if (!lightbox || !lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape') closeLightbox();
+        else if (e.key === 'ArrowRight') nextProject();
+        else if (e.key === 'ArrowLeft') prevProject();
+    });
 
     // 2. Portfolio Filtering
     const filterBtns = document.querySelectorAll('.portfolio-filter-btn');
