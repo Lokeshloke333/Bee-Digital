@@ -324,28 +324,30 @@ window.initContactModal = function() {
                 const btn = form.querySelector('.btn-bee-submit');
                 const originalText = btn.innerHTML;
                 
-                btn.innerHTML = 'Sending Inquiry...';
+                btn.innerHTML = 'Preparing Inquiry...';
                 btn.disabled = true;
 
                 try {
-                    const response = await fetch('/api/contact', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            name: name.value.trim(),
-                            email: email.value.trim(),
-                            phone: phone.value.trim(),
-                            company: company.value.trim(),
-                            service: service.value,
-                            message: message.value.trim()
-                        }),
-                    });
+                    const WHATSAPP_NUMBER = '919912938128';
+                    const userGoals = message.value.trim();
+                    const whatsappMessage = `🐝 BEE DIGITAL — NEW WEBSITE INQUIRY
 
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
+Name: ${name.value.trim()}
+Email: ${email.value.trim()}
+Phone / WhatsApp: ${phone.value.trim()}
+Company / Brand: ${company.value.trim()}
+Service: ${service.value}
+
+Project Details:
+${userGoals ? userGoals : 'Not provided'}
+
+Sent from:
+Bee Digital Website`;
+
+                    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
+
+                    // Open WhatsApp
+                    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 
                     // Success
                     const formState = document.getElementById('contactFormState');
@@ -363,7 +365,7 @@ window.initContactModal = function() {
                         }
                     }
                 } catch (error) {
-                    console.error('Error sending inquiry:', error);
+                    console.error('Error preparing WhatsApp inquiry:', error);
                     if (errorAlert) errorAlert.style.display = 'block';
                 } finally {
                     btn.innerHTML = originalText;
